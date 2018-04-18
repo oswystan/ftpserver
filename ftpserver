@@ -47,7 +47,7 @@ server.on('client:connected', function (connection) {
 
 server.debugging = 0;
 server.listen(21);
-console.log('Listening on port ' + 2000);
+console.log('Listening on port ' + 21);
 
 /************************************* END **************************************/
 
