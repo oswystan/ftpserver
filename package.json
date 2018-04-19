@@ -6,9 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/oswystan/ftpserver.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oswystan/ftpserver/issues"
+  },
+  "homepage": "https://github.com/oswystan/ftpserver#readme",
   "dependencies": {
-    "ftpd": "^0.2.15"
+    "ftp-srv": "^2.16.1"
   }
 }

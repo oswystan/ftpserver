@@ -5,49 +5,19 @@
  *
  *       filename: ftpserver.js
  *    description:
- *        created: 2018-04-18 22:48:56
+ *        created: 2018-04-19 16:43:45
  *         author: wystan
  *
  *********************************************************************************
  */
 
-const ftpd = require('ftpd');
+const ftp_srv = require('ftp-srv');
+const ftpserver = new ftp_srv('ftp://0.0.0.0:2000');
 
-var server = new ftpd.FtpServer("0.0.0.0", {
-    getInitialCwd: function () {
-        return '/';
-    },
-    getRoot: function () {
-        return process.cwd();
-    },
-    pasvPortRangeStart: 1025,
-    pasvPortRangeEnd: 1050,
-    tlsOptions: null,
-    allowUnauthorizedTls: true,
-    useWriteFile: false,
-    useReadFile: false,
-    uploadMaxSlurpSize: 7000 // N/A unless 'useWriteFile' is true.
+ftpserver.on('login', (data, resolve, reject) => {
+	resolve({root:"/home/winner/dl/gcc/gcc.gnu.org"});
 });
 
-server.on('error', function (error) {
-    console.log('FTP Server error:', error);
-});
-
-server.on('client:connected', function (connection) {
-    let username="";
-    connection.on('command:user', function (user, success, failure) {
-        username = user;
-        success();
-    });
-
-    connection.on('command:pass', function (pass, success, failure) {
-        success(username);
-    });
-});
-
-server.debugging = 0;
-server.listen(21);
-console.log('Listening on port ' + 21);
+ftpserver.listen()
 
 /************************************* END **************************************/
-
