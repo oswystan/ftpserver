@@ -12,12 +12,25 @@
  */
 
 const ftp_srv = require('ftp-srv');
-const ftpserver = new ftp_srv('ftp://0.0.0.0:2000');
+const url = "ftp://10.1.250.214:21";
 
-ftpserver.on('login', (data, resolve, reject) => {
-	resolve({root:"/home/winner/dl/gcc/gcc.gnu.org"});
-});
+function main(argv) {
+    if (argv.length < 3) {
+        console.log("usage:", argv[1], "<rootdir>");
+        return;
+    }
 
-ftpserver.listen()
+    const ftpserver = new ftp_srv(url, {
+        anonymous: true,
+        pasv_range: 1000
+    });
+    ftpserver.on('login', (data, resolve, reject) => {
+        resolve({root:process.argv[2]});
+    });
+
+    ftpserver.listen();
+}
+
+main(process.argv);
 
 /************************************* END **************************************/
